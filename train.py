@@ -1,7 +1,12 @@
 import numpy as np
 import tensorflow as tf
+import valohai
 
-input_path = 'mnist.npz'
+
+default_inputs = {'dataset': 'datum://01811510-5839-5b7f-6730-6ab8fc2dee12'}
+
+input_path = valohai.inputs('dataset').path()
+
 with np.load(input_path, allow_pickle=True) as f:
     x_train, y_train = f['x_train'], f['y_train']
     x_test, y_test = f['x_test'], f['y_test']
