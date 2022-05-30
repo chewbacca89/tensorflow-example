@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-input_path = 'data/mnist.npz'
+input_path = 'mnist.npz'
 with np.load(input_path, allow_pickle=True) as f:
     x_train, y_train = f['x_train'], f['y_train']
     x_test, y_test = f['x_test'], f['y_test']
