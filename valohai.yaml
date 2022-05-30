@@ -1,7 +1,9 @@
 - step:
-    name: 'train-model'
-    command: 'python train.py'
-    image: 'tensorflow/tensorflow:2.6.0'
+    name: train-model
+    command:
+        - pip install -r requirments_mnist.txt
+        - python train.py
+    image: tensorflow/tensorflow:2.6.0
 
 
 
