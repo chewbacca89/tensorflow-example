@@ -4,6 +4,10 @@
         - pip install -r requirments_mnist.txt
         - python train.py
     image: tensorflow/tensorflow:2.6.0
+    inputs:
+        - name: dataset
+          default: datum://01811510-5839-5b7f-6730-6ab8fc2dee12
+          optional: false
 
 
 
