@@ -2,12 +2,21 @@
     name: train-model
     command:
         - pip install -r requirments_mnist.txt
-        - python train.py
+        - python train.py {parameters}
     image: tensorflow/tensorflow:2.6.0
     inputs:
         - name: dataset
           default: datum://01811510-5839-5b7f-6730-6ab8fc2dee12
           optional: false
+    parameters:
+      - name: epochs
+        type: integer
+        default: 5
+        optional: false
+      - name: learning_rate
+        type: float
+        default: 0.001
+        optional: false
 
 
 

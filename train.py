@@ -20,12 +20,13 @@ model = tf.keras.models.Sequential([
     tf.keras.layers.Dense(10, activation='softmax')
 ])
 
+optimizer = tf.keras.optimizers.Adam(learning_rate=valohai.parameters('learning_rate').value)
 loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 model.compile(optimizer='adam',
               loss=loss_fn,
               metrics=['accuracy'])
 
-model.fit(x_train, y_train, epochs=5)
+model.fit(x_train, y_train, epochs=valohai.parameters('epochs').value)
 
 model.evaluate(x_test, y_test, verbose=2)
 
