@@ -3,6 +3,14 @@ import tensorflow as tf
 import valohai
 
 
+def log_metadata(epoch, logs):
+    """Helper function to log training metrics"""
+    with valohai.logger() as logger:
+        logger.log('epoch', epoch)
+        logger.log('accuracy', logs['accuracy'])
+        logger.log('loss', logs['loss'])
+
+
 default_inputs = {'dataset': 'datum://01811510-5839-5b7f-6730-6ab8fc2dee12'}
 
 input_path = valohai.inputs('dataset').path()
@@ -26,9 +34,15 @@ model.compile(optimizer='adam',
               loss=loss_fn,
               metrics=['accuracy'])
 
-model.fit(x_train, y_train, epochs=valohai.parameters('epochs').value)
 
-model.evaluate(x_test, y_test, verbose=2)
+callback = tf.keras.callbacks.LambdaCallback(on_epoch_end=log_metadata)
+model.fit(x_train, y_train, epochs=valohai.parameters('epochs').value, callbacks=[callback])
+
+test_accuracy, test_loss = model.evaluate(x_test, y_test, verbose=2)
+
+with valohai.logger() as logger:
+    logger.log('test_accuracy', test_accuracy)
+    logger.log('test_loss', test_loss)
 
 output_path = valohai.outputs().path('model.h5')
 model.save(output_path)
